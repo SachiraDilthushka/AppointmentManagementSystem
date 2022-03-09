@@ -1,4 +1,8 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/screens/RegisterPage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 
@@ -11,6 +15,29 @@ class VerifyEmailPage extends StatefulWidget {
 
 class _VerifyEmailPageState extends State<VerifyEmailPage> {
   bool circular = false;
+  final auth = FirebaseAuth.instance;
+  late User user;
+  late Timer timer;
+
+
+
+
+
+  @override
+  void initState() {
+     user = auth.currentUser!;
+     user.sendEmailVerification();
+     timer = Timer.periodic(Duration(seconds: 5),(timer){
+  checkEmailVerified();
+      });
+    super.initState();
+  }
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,13 +85,12 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                   const SizedBox(
                     height: 50,
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
-                      'A verification email has been sent to your email. please check your emails',
-                      style: TextStyle(
+                      'A verification email has been sent to ${user.email}  please check your inbox',
+                      style: const TextStyle(
                         fontSize: 25,
-
                         color: Colors.black54,),
                       textAlign: TextAlign.center,
                     ),
@@ -157,4 +183,13 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
       ),
     );
   }
+  Future<void> checkEmailVerified() async{
+    user = auth.currentUser!;
+    await user.reload();
+    if(user.emailVerified){
+      timer.cancel();
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => RegisterPage()));
+    }
+  }
+
 }

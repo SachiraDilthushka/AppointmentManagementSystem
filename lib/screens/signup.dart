@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/providers/AuthServices.dart';
@@ -6,6 +7,7 @@ import 'package:frontend/screens/homePage.dart';
 import 'package:frontend/screens/phoneAuthScreen.dart';
 import 'package:frontend/screens/signin.dart';
 import 'package:frontend/providers/user.dart';
+import 'package:frontend/screens/verifyEmailPage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -227,9 +229,9 @@ class _SignupState extends State<Signup> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (builder) =>
-                                                RegisterPage()),
+                                                VerifyEmailPage()),
                                         (route) => false);
-                                  } catch (e) {
+                                  } on FirebaseAuthException catch (e) {
                                     final snackBar =
                                         SnackBar(content: Text(e.toString()));
                                     ScaffoldMessenger.of(context)
