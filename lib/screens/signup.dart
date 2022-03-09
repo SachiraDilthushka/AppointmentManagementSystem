@@ -18,6 +18,7 @@ class Signup extends StatefulWidget {
   @override
   State<Signup> createState() => _SignupState();
 }
+
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   // Future save() async {
@@ -43,7 +44,6 @@ class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-
       bottom: false,
       child: ClipRect(
         child: Scaffold(
@@ -100,7 +100,8 @@ class _SignupState extends State<Signup> {
                                   onPrimary: Colors.black,
                                   minimumSize: const Size(double.infinity, 50),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
                                 ),
                                 onPressed: () {
                                   Navigator.push(
@@ -149,8 +150,8 @@ class _SignupState extends State<Signup> {
                                 },
                                 decoration: const InputDecoration(
                                     labelText: 'Email',
-                                    labelStyle:
-                                        TextStyle(fontSize: 24, color: Colors.grey),
+                                    labelStyle: TextStyle(
+                                        fontSize: 24, color: Colors.grey),
                                     hintText: 'example@gmail.com',
                                     border: UnderlineInputBorder(),
                                     icon: Icon(Icons.email_outlined)),
@@ -213,11 +214,11 @@ class _SignupState extends State<Signup> {
                                     circular = true;
                                   });
                                   try {
-                                    firebase_auth.UserCredential userCredential =
-                                        await firebaseAuth
+                                    firebase_auth.UserCredential
+                                        userCredential = await firebaseAuth
                                             .createUserWithEmailAndPassword(
-                                                email: _emailController.text,
-                                                password: _pwdController.text);
+                                                email: _emailController.text.trim(),
+                                                password: _pwdController.text.trim());
                                     print(userCredential.user?.email);
                                     setState(() {
                                       circular = false;
@@ -225,7 +226,8 @@ class _SignupState extends State<Signup> {
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (builder) => RegisterPage()),
+                                            builder: (builder) =>
+                                                RegisterPage()),
                                         (route) => false);
                                   } catch (e) {
                                     final snackBar =
@@ -249,24 +251,24 @@ class _SignupState extends State<Signup> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 60.0, left: 60.0),
+                            padding:
+                                const EdgeInsets.only(right: 60.0, left: 60.0),
                             child: ElevatedButton.icon(
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.white,
                                   onPrimary: Colors.black,
                                   minimumSize: Size(double.infinity, 50),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
                                 ),
-                                onPressed: () async{
+                                onPressed: () async {
                                   // final provider =
                                   //     Provider.of<GoogleSignInProvider>(context,
                                   //         listen: false);
                                   // provider.googleLogin();
 
-
                                   await authClass.googleSignIn(context);
-
                                 },
                                 icon: const FaIcon(
                                   FontAwesomeIcons.google,
@@ -283,7 +285,8 @@ class _SignupState extends State<Signup> {
                                   onPrimary: Colors.black,
                                   minimumSize: Size(double.infinity, 50),
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30.0)),
+                                      borderRadius:
+                                          BorderRadius.circular(30.0)),
                                 ),
                                 onPressed: () {},
                                 icon: const FaIcon(
@@ -308,7 +311,8 @@ class _SignupState extends State<Signup> {
                                     Navigator.pushAndRemoveUntil(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (builder) => Signin()), (route)=> false);
+                                            builder: (builder) => Signin()),
+                                        (route) => false);
                                   },
                                   child: const Text(
                                     "Signin  ",

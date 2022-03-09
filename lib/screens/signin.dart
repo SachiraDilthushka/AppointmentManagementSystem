@@ -4,8 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:frontend/providers/google_sign_in.dart';
 import 'package:frontend/screens/homePage.dart';
+import 'package:frontend/screens/resetPasswordPage.dart';
 import 'package:frontend/screens/signup.dart';
 import 'package:frontend/providers/user.dart';
+import 'package:frontend/screens/verifyEmailPage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
@@ -152,7 +154,13 @@ class _SigninState extends State<Signin> {
                     alignment: const Alignment(1, 0),
                     padding:
                         const EdgeInsets.only(top: 0, left: 20.0, right: 15),
-                    child: const InkWell(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ResetPasswordPage()));
+                      },
                       child: Text(
                         'Forgot Password',
                         style: TextStyle(
@@ -233,14 +241,13 @@ class _SigninState extends State<Signin> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
                         ),
-                        onPressed: () async{
+                        onPressed: () async {
                           // final provider = Provider.of<GoogleSignInProvider>(
                           //     context,
                           //     listen: false);
                           // provider.googleLogin();
 
                           await authClass.googleSignIn(context);
-
                         },
                         icon: const FaIcon(
                           FontAwesomeIcons.google,
@@ -259,7 +266,14 @@ class _SigninState extends State<Signin> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerifyEmailPage()));
+
+
+                        },
                         icon: const FaIcon(
                           FontAwesomeIcons.facebook,
                           color: Colors.blue,
