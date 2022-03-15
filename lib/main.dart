@@ -8,14 +8,16 @@ import 'package:provider/provider.dart';
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
+  await Firebase.initializeApp();     
+  runApp(MyApp());  
 }
 class MyApp extends StatefulWidget {
   MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
+
+
 }
 
 class _MyAppState extends State<MyApp> {

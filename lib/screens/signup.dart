@@ -6,12 +6,8 @@ import 'package:frontend/screens/RegisterPage.dart';
 import 'package:frontend/screens/homePage.dart';
 import 'package:frontend/screens/phoneAuthScreen.dart';
 import 'package:frontend/screens/signin.dart';
-import 'package:frontend/providers/user.dart';
 import 'package:frontend/screens/verifyEmailPage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
-import '../providers/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class Signup extends StatefulWidget {
@@ -23,19 +19,6 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
-  // Future save() async {
-  //   var res = await http.post(Uri.parse("http://192.168.8.195:5000/signup"),
-  //       headers: <String, String>{
-  //         'Context-Type': 'application/json;chrSet=UTF-8'
-  //       },
-  //       body: <String, String>{
-  //         'email': user.email,
-  //         'password': user.password,
-  //       });
-  //   print(res.body);
-  //   Navigator.push(
-  //       context, new MaterialPageRoute(builder: (context) => Signin()));
-  // }
   bool _secureText = true;
   // User user = User('', '');
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
@@ -43,9 +26,11 @@ class _SignupState extends State<Signup> {
   TextEditingController _pwdController = TextEditingController();
   bool circular = false;
   AuthClass authClass = AuthClass();
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
       bottom: false,
       child: ClipRect(
         child: Scaffold(

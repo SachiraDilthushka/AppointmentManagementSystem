@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/AuthServices.dart';
 import 'package:frontend/screens/signin.dart';
@@ -11,6 +12,13 @@ class SideDrawer extends StatefulWidget {
 
 class _SideDrawerState extends State<SideDrawer> {
   AuthClass authClass = AuthClass();
+  final auth = FirebaseAuth.instance;
+  late User user;
+  @override
+  void initState() {
+    user = auth.currentUser!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -42,8 +50,8 @@ class _SideDrawerState extends State<SideDrawer> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
-                  const Text(
-                    'sachiradilthushk@gmail.com',
+                   Text(
+                    '${user.email}',
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.white,
