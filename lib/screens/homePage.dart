@@ -24,15 +24,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final TextEditingController datePickerController = TextEditingController();
   final TextEditingController timePickerController = TextEditingController();
+  late TextEditingController sessionNameController = TextEditingController();
+  String sessionName = '';
   var numberPickerCurrentValue = 10;
   late DateTime date;
   TimeOfDay? time = TimeOfDay.now();
   @override
   void initState() {
     datePickerController.text = "";
+    sessionNameController =TextEditingController();
+
     super.initState();
   }
-
+  @override
+  void dispose(){
+    sessionNameController.dispose();
+    super.dispose();
+  }
   AuthClass authClass = AuthClass();
 
   late User user;
@@ -57,34 +65,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
-    final items = <Widget>[
-      const Icon(
-        Icons.home,
-        size: 30,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.menu,
-        size: 30,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.event_available,
-        size: 30,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.search,
-        size: 30,
-        color: Colors.white,
-      ),
-      const Icon(
-        Icons.addchart,
-        size: 30,
-        color: Colors.white,
-      ),
-    ];
 
     return SafeArea(
       top: false,
@@ -117,8 +97,12 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
             child: Icon(Icons.add),
-            onPressed: () {
-              openSessionCreateDialog();
+            onPressed: () async {
+              final sessionName = await openSessionCreateDialog();
+              if(sessionName== null ||sessionName.isEmpty) return;
+              setState(() =>
+                this.sessionName = sessionName
+              );
             }
             // => showModalBottomSheet(
             //     elevation: 20,
@@ -230,7 +214,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Future openSessionCreateDialog() => showDialog(
+  Future<String?> openSessionCreateDialog() => showDialog<String>(
       context: context,
       builder: (context) => AlertDialog(
         elevation: 10,
@@ -245,6 +229,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFormField(
+                  controller: sessionNameController,
                   autofocus: true,
                   style: TextStyle(color: Colors.black, fontSize: 20),
                   scrollPadding: EdgeInsets.all(10),
@@ -448,23 +433,11 @@ class _HomePageState extends State<HomePage> {
         ],
           ));
  void sessionSubmitButton(){
-   Navigator.of(context).pop();
+   Navigator.of(context).pop(sessionNameController.text);
  }
   void sessionCancelButton(){
     Navigator.of(context).pop();
   }
-  Widget buildMessageButton() => FloatingActionButton.extended(
-      icon: const Icon(Icons.add),
-      backgroundColor: Colors.green,
-      foregroundColor: Colors.white,
-      onPressed: () => showModalBottomSheet(
-          elevation: 20,
-          //isScrollControlled: true,
-          backgroundColor: Colors.transparent,
-          context: context,
-          builder: (context) =>
-              buildSheet(context, datePickerController, timePickerController)),
-      label: const Text('Create Session'));
 
   Future pickDate(BuildContext context) async {
     final initialDate = DateTime.now();
@@ -480,232 +453,4 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-Widget buildSheet(context, datePickerController, timePickerController) =>
-    Container(
-      decoration: const BoxDecoration(
-        // borderRadius: BorderRadius.vertical(
-        //   top: Radius.circular(40),
-        // ),
-        gradient: LinearGradient(
-          colors: [Colors.indigo, Colors.blueAccent],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        // color: Colors.indigo,
-      ),
-      padding: EdgeInsets.all(20),
-      child: ListView(
-        children: [
-          Center(
-            child: Text(
-              "Create Session",
-              style: TextStyle(
-                fontSize: 25,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-            style: TextStyle(color: Colors.white, fontSize: 20),
-            scrollPadding: EdgeInsets.all(10),
-            decoration: const InputDecoration(
-              labelText: 'Session Name',
-              labelStyle: TextStyle(fontSize: 20),
-              floatingLabelStyle: TextStyle(
-                fontSize: 24,
-              ),
-              prefixIcon: Icon(
-                Icons.edit,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          TextFormField(
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-              readOnly: true,
-              controller: datePickerController,
-              decoration: const InputDecoration(
-                  floatingLabelStyle: TextStyle(
-                    fontSize: 24,
-                  ),
-                  labelText: 'Date',
-                  prefixIcon: Icon(
-                    Icons.calendar_today,
-                    color: Colors.white,
-                  )),
-              onTap: () async {
-                DateTime? pickedDate = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2101));
-                if (pickedDate != null) {
-                  print(
-                      pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedDate =
-                      DateFormat('yyyy-MM-dd').format(pickedDate);
-                  datePickerController.text = formattedDate;
-                  print(formattedDate);
-                } else {
-                  print("Date is not selected");
-                }
-              }),
-          TextFormField(
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-              readOnly: true,
-              controller: timePickerController,
-              decoration: const InputDecoration(
-                floatingLabelStyle: TextStyle(
-                  fontSize: 24,
-                ),
-                labelText: 'Start Time',
-                prefixIcon: Icon(
-                  Icons.access_time_rounded,
-                  color: Colors.white,
-                ),
-              ),
-              onTap: () async {
-                TimeOfDay? pickedTime = await showTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay.now(),
-                );
-                if (pickedTime != null) {
-                  print(
-                      pickedTime); //pickedDate output format => 2021-03-10 00:00:00.000
-                  String formattedTime =
-                      '${pickedTime.hour.toString()} : ${pickedTime.minute.toString()} ${pickedTime.period.name}';
-                  timePickerController.text = formattedTime;
-                  print(formattedTime);
-                } else {
-                  print("Date is not selected");
-                }
-              }),
-          const SizedBox(
-            height: 10,
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.indigo,
-                            blurRadius: 8,
-                            spreadRadius: 2,
-                            offset: Offset(1, 1),
-                          ),
-                        ]),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              'Appointments',
-                              style: TextStyle(
-                                  fontSize: 20, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            NumberPicker(
-                                textStyle:
-                                    TextStyle(fontSize: 25, color: Colors.grey),
-                                selectedTextStyle: TextStyle(
-                                    fontSize: 30,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                                itemWidth: 35,
-                                itemHeight: 60,
-                                axis: Axis.horizontal,
-                                minValue: 1,
-                                maxValue: 200,
-                                value: 10,
-                                onChanged: (value) {}),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 10),
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.indigo,
-                            blurRadius: 8,
-                            spreadRadius: 2,
-                            offset: Offset(1, 1),
-                          ),
-                        ]),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            const Text(
-                              'Duration(min) ',
-                              style: TextStyle(
-                                  fontSize: 20, color: Colors.black54),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            NumberPicker(
-                                textStyle:
-                                    TextStyle(fontSize: 25, color: Colors.grey),
-                                selectedTextStyle: TextStyle(
-                                    fontSize: 30,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                                itemWidth: 35,
-                                itemHeight: 60,
-                                axis: Axis.horizontal,
-                                minValue: 1,
-                                maxValue: 200,
-                                value: 10,
-                                onChanged: (value) {}),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Container(
-            padding: EdgeInsets.all(20),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                ' CREATE',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+
