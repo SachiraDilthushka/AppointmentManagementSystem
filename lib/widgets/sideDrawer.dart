@@ -106,14 +106,16 @@ class _SideDrawerState extends State<SideDrawer> {
               style: TextStyle(fontSize: 20),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            width: 300,
-            height: 157,
-            margin: const EdgeInsets.only(top: 240, left: 40, right: 40),
-            decoration: const BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(image: AssetImage('images/slt-3.png')),
+          SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              width: 300,
+              height: 157,
+              margin: const EdgeInsets.only(top: 240, left: 40, right: 40),
+              decoration: const BoxDecoration(
+                shape: BoxShape.rectangle,
+                image: DecorationImage(image: AssetImage('images/slt-3.png')),
+              ),
             ),
           )
         ],

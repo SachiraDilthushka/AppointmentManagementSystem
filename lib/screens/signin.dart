@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 //import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -24,27 +25,56 @@ class Signin extends StatefulWidget {
 
 class _SigninState extends State<Signin> {
   final _formKey = GlobalKey<FormState>();
-  // Future save() async {
-  //   var res = await http.post(Uri.parse("http://192.168.8.195:5000/signin"),
-  //       headers: <String, String>{
-  //         'Context-Type': 'application/json;chrSet=UTF-8'
-  //       },
-  //       body: <String, String>{
-  //         'email': user.email,
-  //         'password': user.password,
-  //       });
-  //   print(res.body);
-  //   Navigator.push(
-  //       context, MaterialPageRoute(builder: (context) => const Dashboard()));
-  // }
-
-  // User user = User('', '');
   firebase_auth.FirebaseAuth firebaseAuth = firebase_auth.FirebaseAuth.instance;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   bool _secureText = true;
   bool circular = false;
   AuthClass authClass = AuthClass();
+  Map<String,dynamic>? _userData;
+  AccessToken? _accessToken;
+  bool _checking = true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _checkIfisLoggedIn();
+  }
+  _checkIfisLoggedIn() async{
+    final accessToken = await FacebookAuth.instance.accessToken;
+    setState(() {
+      _checking = false;
+    });
+    if(accessToken!=null){
+      print(accessToken.toJson());
+      final userData = await FacebookAuth.instance.getUserData();
+      _accessToken= accessToken;
+      setState(() {
+        _userData = userData;
+      });
+    }else{
+      _login();
+    }
+  }
+  _login() async {
+    final LoginResult result = await FacebookAuth.instance.login();
+    if(result.status == LoginStatus.success){
+      _accessToken = result.accessToken;
+      final userData = await FacebookAuth.instance.getUserData();
+      _userData = userData;
+    }else {
+      print(result.status);
+      print(result.message);
+    }
+    }
+  _logout() async{
+    await FacebookAuth.instance.logOut();
+    _accessToken = null;
+    _userData = null;
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -267,10 +297,13 @@ class _SigninState extends State<Signin> {
                               borderRadius: BorderRadius.circular(30.0)),
                         ),
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VerifyEmailPage()));
+
+                                  _login;
+
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => VerifyEmailPage()));
 
 
                         },

@@ -7,7 +7,6 @@ class GoogleSignInProvider extends ChangeNotifier{
 GoogleSignInAccount? _user;
 GoogleSignInAccount get user => _user!;
 
-
 Future googleLogin() async{
 try {
   final googleUser = await googleSignIn.signIn();
