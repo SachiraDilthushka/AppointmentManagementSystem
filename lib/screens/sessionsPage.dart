@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rolling_switch/rolling_switch.dart';
+
 class SessionsPage extends StatefulWidget {
   const SessionsPage({Key? key}) : super(key: key);
 
@@ -18,6 +19,7 @@ class _SessionsPageState extends State<SessionsPage> {
     'Session three',
     'Session four',
   ];
+
   String? selectedSessionItem;
   @override
   Widget build(BuildContext context) {
@@ -53,7 +55,10 @@ class _SessionsPageState extends State<SessionsPage> {
                   children: [
                     Padding(
                       padding: EdgeInsets.all(10),
-                      child: Text('dgfd'),
+                      child: Text(
+                        'Date',
+                        style: TextStyle(fontSize: 20),
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(10),
@@ -100,26 +105,6 @@ class _SessionsPageState extends State<SessionsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      child: RollingSwitch.icon(
-                        width: 100,
-                        onChanged: (bool value) {
-                          setState(() {
-                            value = !isSessionStart;
-                          });
-                        },
-                        rollingInfoRight: const RollingIconInfo(
-                          icon: Icons.check,
-                          text: Text('Started'),
-                          backgroundColor: Colors.green,
-                        ),
-                        rollingInfoLeft: const RollingIconInfo(
-                          icon: Icons.start,
-                          backgroundColor: Colors.grey,
-                          text: Text('Start'),
-                        ),
-                      ),
-                    ),
-                    Container(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FlatButton(
@@ -154,7 +139,27 @@ class _SessionsPageState extends State<SessionsPage> {
                           ),
                         ),
                       ),
-                    )
+                    ),
+                    Container(
+                      child: RollingSwitch.icon(
+                        width: 100,
+                        onChanged: (bool value) {
+                          setState(() {
+                            value = !isSessionStart;
+                          });
+                        },
+                        rollingInfoRight: const RollingIconInfo(
+                          icon: Icons.check,
+                          text: Text('Started'),
+                          backgroundColor: Colors.green,
+                        ),
+                        rollingInfoLeft: const RollingIconInfo(
+                          icon: Icons.start,
+                          backgroundColor: Colors.grey,
+                          text: Text('Start'),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -165,41 +170,19 @@ class _SessionsPageState extends State<SessionsPage> {
     );
   }
 
-  // Widget buildSessionCard() => InkWell(
-  //       onTap: () {
-  //         setState(() {
-  //           isSelected = !isSelected;
-  //         });
-  //         print('selected');
-  //       },
-  //       focusColor: Colors.red,
-  //       child: Container(
-  //         width: 250,
-  //         height: 50,
-  //         decoration: BoxDecoration(
-  //           borderRadius: BorderRadius.circular(10.0),
-  //           color: isSelected ? Colors.blue : Colors.grey,
-  //         ),
-  //         child: Column(
-  //           children: [
-  //             Container(
-  //               padding: EdgeInsets.all(10),
-  //                child: Row(
-  //                 children: [
-  //                   Text(
-  //                     'Session Name',
-  //                     style: TextStyle(fontSize: 22, color: Colors.black54),
-  //                   ),
-  //                   Switch(
-  //                     value: true,
-  //                     onChanged: (bool value) {},
-  //                     activeColor: Colors.green,
-  //                   )
-  //                 ],
-  //               ),
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     );
+  Widget buildAppointmentDetailsTable() {
+    final columns = [' Appointment No', 'Caller ID', 'Status', 'Patient Name'];
+    return DataTable(
+      columns: getColumns(columns),
+      rows: getRows(appointmentDetails),
+    );
+  }
+
+  List<DataColumn> getColumns(List<String> columns) => columns
+      .map(
+        (String column) => DataColumn(
+          label: Text(column),
+        ),
+      )
+      .toList();
 }
