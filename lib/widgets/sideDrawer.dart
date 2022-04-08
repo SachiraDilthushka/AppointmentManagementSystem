@@ -106,18 +106,18 @@ class _SideDrawerState extends State<SideDrawer> {
               style: TextStyle(fontSize: 20),
             ),
           ),
-          SingleChildScrollView(
-            child: Container(
+
+           Container(
               padding: const EdgeInsets.all(20),
-              width: 300,
-              height: 157,
-              margin: const EdgeInsets.only(top: 240, left: 40, right: 40),
+              width: MediaQuery.of(context).size.width*0.5,
+              height: MediaQuery.of(context).size.height*0.2,
+           //   margin: const EdgeInsets.only(top: 100, left: 40, right: 40, bottom: 200),
               decoration: const BoxDecoration(
                 shape: BoxShape.rectangle,
                 image: DecorationImage(image: AssetImage('images/slt-3.png')),
               ),
             ),
-          )
+
         ],
       ),
     );

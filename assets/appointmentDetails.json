@@ -1,0 +1,44 @@
+{
+  "001": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "002": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "003": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "004": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "005": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "006": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  },
+  "007": {
+    "appointmentId": "A0123456",
+    "callerId": "0773363507",
+    "status": true,
+    "patientName": "Sarath"
+  }
+}
