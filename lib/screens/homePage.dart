@@ -2,10 +2,10 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/AuthServices.dart';
-import 'package:frontend/screens/appointmentsPage.dart';
+import 'package:frontend/screens/SearchPatients.dart';
 import 'package:frontend/screens/createSessionPage.dart';
-import 'package:frontend/screens/dashboard.dart';
-import 'package:frontend/screens/profilePage.dart';
+import 'package:frontend/screens/dashboardScreen/dashboard.dart';
+import 'package:frontend/screens/CreateAppontment.dart';
 import 'package:frontend/screens/sessionsPage.dart';
 import 'package:frontend/screens/signin.dart';
 import 'package:frontend/widgets/sideDrawer.dart';
@@ -231,7 +231,7 @@ class _HomePageState extends State<HomePage> {
                 TextFormField(
                   controller: sessionNameController,
                   autofocus: true,
-                  style: TextStyle(color: Colors.black, fontSize: 20),
+                  style: const TextStyle(color: Colors.black, fontSize: 20),
                   scrollPadding: EdgeInsets.all(10),
                   decoration: const InputDecoration(
                     labelText: 'Session Name',
@@ -323,7 +323,6 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-
                           margin: EdgeInsets.only(top: 10),
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(

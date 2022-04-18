@@ -48,7 +48,7 @@ class _SessionsPageState extends State<SessionsPage> {
             ),
           ),
           Container(
-            margin: EdgeInsets.all(10),
+            margin: const EdgeInsets.all(10),
             decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
                 color: Colors.grey,
@@ -140,7 +140,7 @@ class _SessionsPageState extends State<SessionsPage> {
                               borderRadius: BorderRadius.circular(5.0)),
                           color: Colors.red,
                           onPressed: () {},
-                          child: Text(
+                          child: const Text(
                             "CANCEL",
                             style: TextStyle(
                               color: Colors.white,

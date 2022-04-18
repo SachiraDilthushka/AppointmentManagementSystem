@@ -13,7 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import '../providers/AuthServices.dart';
-import 'dashboard.dart';
+import 'dashboardScreen/dashboard.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class Signin extends StatefulWidget {
