@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/providers/AuthServices.dart';
 import 'package:frontend/screens/signin.dart';
-
 class SideDrawer extends StatefulWidget {
   const SideDrawer({Key? key}) : super(key: key);
 
@@ -39,7 +38,7 @@ class _SideDrawerState extends State<SideDrawer> {
                       shape: BoxShape.circle,
                       image: DecorationImage(
                         image: NetworkImage(
-                            'https://avatars.githubusercontent.com/u/37095846?v=4'),
+                            'https://w1.pngwing.com/pngs/386/684/png-transparent-face-icon-user-icon-design-user-profile-share-icon-avatar-black-and-white-silhouette.png'),
                       ),
                     ),
                   ),
