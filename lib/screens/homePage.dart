@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:frontend/model/Session.dart';
 import 'package:frontend/providers/AuthServices.dart';
 import 'package:frontend/screens/SearchPatients.dart';
 import 'package:frontend/screens/createSessionPage.dart';
@@ -11,7 +13,7 @@ import 'package:frontend/screens/signin.dart';
 import 'package:frontend/widgets/sideDrawer.dart';
 import 'package:intl/intl.dart';
 import 'package:numberpicker/numberpicker.dart';
-
+import 'package:frontend/data/database.dart';
 import '../providers/user.dart';
 
 class HomePage extends StatefulWidget {
@@ -25,15 +27,31 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController datePickerController = TextEditingController();
   final TextEditingController timePickerController = TextEditingController();
   late TextEditingController sessionNameController = TextEditingController();
+  final TextEditingController NoOfAppointmentController = TextEditingController();
+  final TextEditingController durationController = TextEditingController();
+  final TextEditingController isPublishedController = TextEditingController();
   String sessionName = '';
   var numberPickerCurrentValue = 10;
   late DateTime date;
   TimeOfDay? time = TimeOfDay.now();
+
+
+  setSessionData(){
+    dref.child("Session").set({
+      'sessionName': "Session 1",
+      'isPublished': true,
+      'NoOfAppointment':15,
+      'duration':30,
+      'date': "09/06/2022",
+      'time':"7.30 pm"
+    });
+  }
+
+
   @override
   void initState() {
     datePickerController.text = "";
     sessionNameController =TextEditingController();
-
     super.initState();
   }
   @override
@@ -62,10 +80,8 @@ class _HomePageState extends State<HomePage> {
   ];
   final PageStorageBucket bucket = PageStorageBucket();
   Widget currentScreen = SessionsPage();
-
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       top: false,
       bottom: false,
@@ -115,7 +131,7 @@ class _HomePageState extends State<HomePage> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           elevation: 15,
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 12,
           child: Container(
             padding: EdgeInsets.only(left: 10, right: 10),
@@ -432,6 +448,17 @@ class _HomePageState extends State<HomePage> {
         ],
           ));
  void sessionSubmitButton(){
+   //setSessionData();
+   final session = Session(
+       sessionName: sessionNameController.text,
+       isPublished: bool.hasEnvironment(isPublishedController.text),
+       NoOfAppointment:  int.parse(NoOfAppointmentController.text),
+       duration: int.parse(durationController.text),
+       date: DateTime.parse(datePickerController.text),
+       time: DateTime.parse(timePickerController.text),
+
+   );
+   createSession(session);
    Navigator.of(context).pop(sessionNameController.text);
  }
   void sessionCancelButton(){
@@ -450,6 +477,14 @@ class _HomePageState extends State<HomePage> {
       date = newDate;
     });
   }
+  Future createSession(Session session) async {
+   final docSession = FirebaseFirestore.instance.collection('session').doc();
+   session.id = docSession.id;
+
+   final json = session.toJson();
+   await docSession.set(json);
+  }
+  
 }
 
 

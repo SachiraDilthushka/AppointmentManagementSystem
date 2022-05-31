@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/model/Session.dart';
 import 'package:frontend/providers/SessionDetails.dart';
 import 'package:frontend/widgets/createSessionForm.dart';
 import 'package:intl/intl.dart';
-
+import 'package:frontend/data/database.dart';
 import '../data/sessionData.dart';
 
 class CreateSessionPage extends StatefulWidget {
@@ -15,6 +16,18 @@ class CreateSessionPage extends StatefulWidget {
 
 class _CreateSessionPageState extends State<CreateSessionPage> {
   final TextEditingController datePickerController = TextEditingController();
+  List<Session> sessions = [];
+
+  setSessionData(){
+    dref.child("Session").set({
+      'sessionName': "Session 1",
+      'isPublished': true,
+      'NoOfAppointment':15,
+      'duration':30,
+      'date': "09/06/2022",
+      'time':"7.30 pm"
+    });
+  }
 
   @override
   void initState() {
@@ -42,15 +55,7 @@ class _CreateSessionPageState extends State<CreateSessionPage> {
           const SizedBox(
             height: 20,
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(100.0),
-          //   child: Center(
-          //     child: SvgPicture.asset(
-          //       'images/nodata.svg',
-          //       alignment: Alignment.topCenter,
-          //     ),
-          //   ),
-          // ),
+
           Expanded(
             child: ListView(
               padding: EdgeInsets.all(10),

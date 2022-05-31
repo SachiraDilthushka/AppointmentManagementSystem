@@ -37,151 +37,159 @@ class _SessionsPageState extends State<SessionsPage> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.all(10),
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              'Sessions',
-              style: TextStyle(fontSize: 25, color: Colors.blueAccent),
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: Colors.white, boxShadow: [
-              BoxShadow(
-                color: Colors.grey,
-                blurRadius: 2,
-                spreadRadius: 1,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.all(10),
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'Sessions',
+                style: TextStyle(fontSize: 25, color: Colors.blueAccent),
               ),
-            ]),
-            padding: EdgeInsets.all(10),
-            height: screenHeight * 0.22,
-            width: screenWidth * 0.9,
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        'Date',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: [
-                          DropdownButton<String>(
-                            borderRadius: BorderRadius.circular(20),
-                            iconEnabledColor: Colors.blueAccent,
-                            iconSize: 30,
-                            hint: Text(
-                              'Select Your Session',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            // decoration: InputDecoration(
-                            // enabledBorder: OutlineInputBorder(
-                            //   borderRadius: BorderRadius.circular(12),
-                            //   borderSide: BorderSide(width: 3, color: Colors.blueAccent)
-                            // )
-                            // ),
-                            value: selectedSessionItem,
-                            items: sessionItems
-                                .map(
-                                  (item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(
-                                      item,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            onChanged: (value) => setState(() {
-                              selectedSessionItem = value;
-                            }),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+            ),
+            Container(
+              margin: const EdgeInsets.all(10),
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 2,
+                  spreadRadius: 1,
                 ),
-                Divider(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ]),
+              padding: EdgeInsets.all(10),
+              height: screenHeight * 0.22,
+              width: screenWidth * 0.9,
+              child: SingleChildScrollView(
+                child: Column(
                   children: [
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          color: Colors.indigo,
-                          onPressed: () {},
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(10),
                           child: Text(
-                            "SUBMIT",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                            'Date',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            children: [
+                              DropdownButton<String>(
+                                borderRadius: BorderRadius.circular(20),
+                                iconEnabledColor: Colors.blueAccent,
+                                iconSize: 30,
+                                hint: Text(
+                                  'Select Your Session',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                // decoration: InputDecoration(
+                                // enabledBorder: OutlineInputBorder(
+                                //   borderRadius: BorderRadius.circular(12),
+                                //   borderSide: BorderSide(width: 3, color: Colors.blueAccent)
+                                // )
+                                // ),
+                                value: selectedSessionItem,
+                                items: sessionItems
+                                    .map(
+                                      (item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (value) => setState(() {
+                                  selectedSessionItem = value;
+                                }),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.indigo,
+                              onPressed: () {},
+                              child: Text(
+                                "SUBMIT",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
-                          color: Colors.red,
-                          onPressed: () {},
-                          child: const Text(
-                            "CANCEL",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
+                        Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FlatButton(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0)),
+                              color: Colors.red,
+                              onPressed: () {},
+                              child: const Text(
+                                "CANCEL",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      child: RollingSwitch.icon(
-                        width: 100,
-                        onChanged: (bool value) {
-                          setState(() {
-                            value = !isSessionStart;
-                          });
-                        },
-                        rollingInfoRight: const RollingIconInfo(
-                          icon: Icons.check,
-                          text: Text('Started'),
-                          backgroundColor: Colors.green,
+                        Container(
+                          child: RollingSwitch.icon(
+                            width: 100,
+                            onChanged: (bool value) {
+                              setState(() {
+                                value = !isSessionStart;
+                              });
+                            },
+                            rollingInfoRight: const RollingIconInfo(
+                              icon: Icons.check,
+                              text: Text('Started'),
+                              backgroundColor: Colors.green,
+                            ),
+                            rollingInfoLeft: const RollingIconInfo(
+                              icon: Icons.start,
+                              backgroundColor: Colors.grey,
+                              text: Text('Start'),
+                            ),
+                          ),
                         ),
-                        rollingInfoLeft: const RollingIconInfo(
-                          icon: Icons.start,
-                          backgroundColor: Colors.grey,
-                          text: Text('Start'),
-                        ),
-                      ),
+                      ],
                     ),
+                  SizedBox(
+                    height: 20,
+                  )
                   ],
+
                 ),
-              ],
+              ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              child: buildAppointmentDetailsTable(),
-            ),
-          )
-        ],
+            SingleChildScrollView(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                child: buildAppointmentDetailsTable(),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
